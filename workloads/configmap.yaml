@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  abdelali.conf: |
+    server{ 
+      listen 3000;
+      root /usr/share/nginx/html;
+      index index.html abdelali.html ;
+      location / {
+       try_files $uri /index.html= 404;
+      }
+    
+    }
