@@ -60,3 +60,50 @@ helm repo remove [name of repo]
 ```
 helm uninstall [RELEASE NAME]
 ```
+
+- to override the default values in the chart
+
+```
+helm install [RELEASE NAME]  -f myvalues.yaml [Chart Name]
+
+```
+
+- or
+
+```
+helm install [RELEASE NAME] --values myvalues.yaml [Chart Name]
+```
+
+- or
+
+```
+
+helm install [RELEASE NAME] --set key=value [Chart Name]
+
+```
+
+- to search for a repo
+
+```
+helm search repo [keywords of repo]
+```
+
+- to search for charts in repo
+
+```
+helm search hub [Name of repo] [keywords of chart]
+```
+
+- to create our own chart
+
+```
+helm create [Chart Name]
+```
+
+### 4. set the default namespace for your cluster
+
+- the default namespace for the k8s cluster is default, to switch to another existed namespace
+
+```
+kubect config set-context --current --namespace monitoring
+```

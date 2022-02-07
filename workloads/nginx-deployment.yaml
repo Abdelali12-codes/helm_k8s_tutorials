@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-nginx
+  name: nginx-deployment
+  namespace: default
 spec:
+  replicas: 2
   selector:
     matchLabels:
-      run: my-nginx
-  replicas: 2
+      app: nginx
   template:
     metadata:
       labels:
-        run: my-nginx
+        app: nginx
     spec:
       containers:
-      - name: my-nginx
+      - name: nginx
         image: nginx
         ports:
         - containerPort: 80
@@ -21,12 +22,33 @@ spec:
           - mountPath: /etc/nginx/conf.d
             name: configmap
       volumes:
-        - name: host-volume
-          hostPath:
-            path: /home/abdelali/react-app # this the path on the worker node where your web site resie
         - name: configmap
           configMap:
              name: nginx-config
              items:
                - key: abdelali.conf
                  path: abdelali.conf
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: default
+  labels:
+    app: nginx
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx
+  ports:
+   - name: first
+     protocol: TCP 
+     port: 80
+     targetPort: 80
+   - name: second
+     protocol: TCP
+     port: 3000
+     targetPort: 3000
+    
+   
