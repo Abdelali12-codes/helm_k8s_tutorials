@@ -1,0 +1,27 @@
+
+serviceMonitor:
+  additionalLabels: 
+     app.kubernetes.io/name: grafana
+     app.kubernetes.io/instance: prometheus
+  
+
+
+
+# mysql connection params which build the DATA_SOURCE_NAME env var of the docker container
+mysql:
+  db: ""
+  # host: "localhost"
+  host: "mysql-service.default"
+  param: ""
+  pass: "jadelmoula"
+  port: 3306
+  protocol: ""
+  user: "abdelali"
+  # secret with full DATA_SOURCE_NAME env var as stringdata
+  existingSecret: ""
+  # secret only containing the password
+  existingPasswordSecret:
+    name: ""
+    key: ""
+
+
