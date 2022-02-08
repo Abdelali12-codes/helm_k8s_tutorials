@@ -41,10 +41,10 @@ spec:
       volumes:
         - name: configmap
           configMap:
-             name: mysql-conf
+             name: mysqlconf
              items:
-               - key: mysql-conf.sql
-                 path: mysql-conf.sql
+               - key: mysqlconf.sql
+                 path: mysqlconf.sql
         
 ---
 
@@ -63,4 +63,51 @@ spec:
     - protocol: TCP 
       port: 3306
       targetPort: 3306
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myadmin-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myadmin
+  template:
+    metadata:
+      labels:
+        app: myadmin
+    spec:
+      containers:
+      - name: myadmin
+        image: phpmyadmin/phpmyadmin
+        env:
+          - name: PMA_PORT
+            value: "3306"
+          - name: PMA_HOST
+            value: mysql-service
+           
+        ports:
+        - containerPort: 80
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myadmin-service
+  namespace: default
+  labels:
+    app: myadmin
+spec:
+  type: ClusterIP
+  selector:
+    app: myadmin
+  ports:
+    - protocol: TCP 
+      port: 80
+      targetPort: 80
       

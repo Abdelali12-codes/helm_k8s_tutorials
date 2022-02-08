@@ -4,7 +4,7 @@ metadata:
   name: nginx-deployment
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -19,8 +19,9 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-          - mountPath: /etc/nginx/conf.d
-            name: configmap
+          - name: configmap
+            mountPath: /etc/nginx/conf.d
+            
       volumes:
         - name: configmap
           configMap:

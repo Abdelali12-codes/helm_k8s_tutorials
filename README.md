@@ -107,3 +107,5 @@ helm create [Chart Name]
 ```
 kubect config set-context --current --namespace monitoring
 ```
+
+docker run --rm -p 8080:80 -e PMA_HOST=127.0.0.1 -e PMA_PORT=4000 phpmyadmin/phpmyadmin
