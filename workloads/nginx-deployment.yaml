@@ -17,7 +17,7 @@ spec:
       - name: nginx
         image: nginx
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         volumeMounts:
           - name: configmap
             mountPath: /etc/nginx/conf.d
@@ -25,7 +25,7 @@ spec:
       volumes:
         - name: configmap
           configMap:
-             name: nginx-config
+             name: nginx-conf
              items:
                - key: abdelali.conf
                  path: abdelali.conf
@@ -43,11 +43,7 @@ spec:
   selector:
     app: nginx
   ports:
-   - name: first
-     protocol: TCP 
-     port: 80
-     targetPort: 80
-   - name: second
+   - name: nginx
      protocol: TCP
      port: 3000
      targetPort: 3000
