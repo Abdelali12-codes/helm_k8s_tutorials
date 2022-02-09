@@ -1,0 +1,21 @@
+
+deployment:
+    name: helm-deployment
+    replicas: 1
+    podLabels: 
+      release: helm
+    image: abdelalidocker/nginx-k8s
+    containername: nginx
+    containerport: 80
+
+
+service:
+    name: helm-service
+    serviceLabels:
+       release: helm
+    selector:
+      release: helm
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+    

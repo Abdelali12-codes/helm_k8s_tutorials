@@ -134,7 +134,9 @@ kubectl config  set-credentials developer --username=exp --password=some-passwor
 - set cluster
 
 ```
-kubectl config set-credentials developer --client-certificate=fake-cert-file --client-key=fake-key-seefile
+kubectl config  set-cluster development --server=https://1.2.3.4 --certificate-authority=fake-ca-file
+
+kubectl config  set-cluster scratch --server=https://5.6.7.8 --insecure-skip-tls-verify
 ```
 
 - set context
@@ -195,4 +197,72 @@ helm upgrade --install ingress-nginx ingress-nginx \
 ```
 helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
+```
+
+### 7. configuring the prometheus alert manager
+
+- view the content of the altertmanager secret
+
+```
+kubectl get secret alertmanager-monitoring-kube-prometheus-alertmanager -n monitoring -o json
+```
+
+- delete the default secret of the prometheus alertmanager
+
+```
+kubectl delete secret alertmanager-monitoring-kube-prometheus-alertmanager -n monitoring
+```
+
+- create new secret with the same name from the alertmanager.yaml file (make sure to execute the below command on the directory where altermanager.yaml resides )
+
+```
+kubectl create secret generic alertmanager-monitoring-kube-prometheus-alertmanager --from-file=alertmanager.yaml
+```
+
+### 8. Helm commands
+
+#### ways to install charts
+
+- by reference a repo
+
+```
+helm repo add [Name of Repo] [Repo url]
+```
+
+- by pulling the chart to your local mahcine
+
+```
+helm pull [Chart Name]
+```
+
+- to untar your helm chart to a dir
+
+```
+helm pull [Char Name] --untar --untardir [directory]
+```
+
+#### Chart Management
+
+- create your own chart
+
+```
+helm create [Chart Name]
+```
+
+- show default values of a chart
+
+```
+helm show values [Chart Name]
+```
+
+- show chart definition
+
+```
+helm show chart [Chart Name]
+```
+
+- inspect a chart and its content
+
+```
+helm show all [Chart Name]
 ```

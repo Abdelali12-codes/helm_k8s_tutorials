@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: default
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels: 
+      release: {{ .Values.deployment.podLabels.release }}
+  template:
+    metadata:
+      labels: 
+        release: {{ .Values.deployment.podLabels.release }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.containername }}
+        image: {{ .Values.deployment.image }}
+        ports:
+        - containerPort: {{ .Values.deployment.containerport }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: default
+  labels: 
+    release: {{ .Values.service.serviceLabels.release }}
+spec:
+  type: {{ .Values.service.type }}
+  selector: 
+    release: {{ .Values.service.selector.release }}
+  ports:
+   - port: {{ .Values.service.port }}
+     targetPort: {{ .Values.service.targetPort }}
+
+
