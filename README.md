@@ -241,7 +241,7 @@ helm pull [Chart Name]
 helm pull [Char Name] --untar --untardir [directory]
 ```
 
-#### Chart Management
+#### chart Management
 
 - create your own chart
 
