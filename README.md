@@ -93,6 +93,11 @@ helm search repo [keywords of repo]
 ```
 helm search hub [Name of repo] [keywords of chart]
 ```
+- or
+
+```
+helm search repo name-of-chart
+```
 
 - to create our own chart
 
